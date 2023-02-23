@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const Product = require('../../models/Product');
+const Category = require('../../models/Category');
+const Tag = require('../../models/Tag');
+const ProductTag = require('../../models/ProductTag');
 
 // The `/api/products` endpoint
 
@@ -12,7 +15,7 @@ router.get('/', (req, res) => {
 
 // get one product
 router.get('/:id', async (req, res) => {
-  const product = Product.findByPk(req.params.id, {include: Category}, {include: Tag})
+  const product = await Product.findByPk(req.params.id, {include: Category}, {include: Tag})
   if(product === null){
     res.status(404).json({'Error: ': 'Product does not exist. Check your ID number!'})
   }else{
