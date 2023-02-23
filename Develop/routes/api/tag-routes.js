@@ -1,8 +1,5 @@
 const router = require('express').Router();
-const Tag = require('../../models/Tag');
-const Product = require('../../models/Product');
-const ProductTag = require('../../models/ProductTag');
-
+const {Tag, Product, ProductTag} = require('../../models/index.js');
 
 router.get('/', (req, res) => {
   Tag.findAll({include: Product})
