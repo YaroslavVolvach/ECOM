@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {Tag, Product, ProductTag} = require('../../models/index.js');
 
 router.get('/', (req, res) => {
-  Tag.findAll({include: Product})
+  Tag.findAll({include: {model: Product, through: ProductTag, as: 'tagIds'}})
   .then(data => res.status(200).json(data))
   .catch(err => res.status(500).json(err))
 });
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', (req, res) => {
   Tag.create(req.body)
   .then((tag) => {
-    if (req.body.tagIds.length) {
+    if (req.body.productIds.length) {
       const productTagIdArr = req.body.productIds.map((product_id) => {
         return {
           tag_id: tag.id,

@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const category = await Category.update({where: {id: req.params.id}})
+  const category = await Category.update({category_name: req.body.category_name}, {where: {id: req.params.id}})
   if(category === null){
     res.status(404).json({'Error: ': 'Catrgory does not exist. Check your ID number!'})
   }else{
@@ -34,7 +34,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const category = await Category.update({where: {id: req.params.id}})
+  const category = await Category.destroy({where: {id: req.params.id}})
   if(category === null){
     res.status(404).json({'Error: ': 'Catrgory does not exist. Check your ID number!'})
   }else{
